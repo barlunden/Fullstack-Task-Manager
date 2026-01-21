@@ -5,9 +5,13 @@ A modern, secure, and responsive Task Management application. This project demon
 ## ✨ Features
 
 **Secure Authentication:** Custom-built registration and login system using JWT and Bcrypt hashing.
+
 **Full CRUD Functionality:** Create, read, update, and delete tasks with real-time UI updates.
+
 **Data Integrity:** Server-side validation with express-validator and client-side protection.
+
 **User Ownership:** Database logic ensures users only see and manage their own private tasks.
+
 **Modern UI/UX:** Built with Tailwind CSS 4 and featuring elegant React Hot Toast notifications.
 
 ## 🛠️ Tech Stack
@@ -79,5 +83,7 @@ npm run dev
 ## 🔒 Security Measures
 
 **Password Hashing:** Passwords are never stored in plain text.
+
 **Access Control:** Protected routes in both frontend and backend ensure unauthorized users are redirected to login.
+
 **Database Isolation:** Every query is scoped via the userId decoded from the secure JWT token.
