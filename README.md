@@ -17,16 +17,25 @@ A modern, secure, and responsive Task Management application. This project demon
 ## 🛠️ Tech Stack
 
 **Frontend:**
+
 React 19 & Vite
+
 Tailwind CSS 4
+
 Axios for API communication
+
 React Router (Protected Routing)
+
 React Hot Toast
 
 **Backend:**
+
 Node.js & Express
+
 SQLite (Better-SQLite3)
+
 JSON Web Tokens (JWT) for session management
+
 Bcrypt for password security
 
 ## 🚀 Installation & Setup
