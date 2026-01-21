@@ -33,22 +33,34 @@ const Dashboard = () => {
   }, []);
 
   const addTask = async (e) => {
-    e.preventDefault();
-    const token = localStorage.getItem("token");
-    try {
-      await axios.post(
-        "http://localhost:5555/api/add-task",
-        { content: newTask },
-        { headers: { Authorization: `Bearer ${token}` } },
-      );
-      toast.success('Task added successfully!');
-      setNewTask("");
-      refreshTasks();
-    } catch (err) {
-      const msg = err.response?.data?.errors?.[0]?.msg || "Failed to add task";
-      toast.error(msg);
-    }
-  };
+  e.preventDefault();
+
+  // --- FRONTEND VALIDATION (Bottleneck) ---
+  if (newTask.trim().length < 5) {
+    return toast.error("Task must be at least 5 characters long");
+  }
+
+  if (newTask.length > 200) {
+    return toast.error("Task is too long (max 200 characters)");
+  }
+
+  // --- IF OK, SEND TO BACKEND ---
+  const token = localStorage.getItem('token');
+  try {
+    await axios.post('http://localhost:5555/api/add-task', 
+      { content: newTask },
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+    
+    setNewTask(''); 
+    refreshTasks();
+    toast.success('Task added!');
+  } catch (err) {
+    // If Backend finds faults anyway
+    const errorMsg = err.response?.data?.errors?.[0]?.msg || "Could not add task";
+    toast.error(errorMsg);
+  }
+};
 
   const deleteTask = async (id) => {
     const token = localStorage.getItem("token");
@@ -68,25 +80,34 @@ const Dashboard = () => {
   };
 
   const saveUpdate = async (id) => {
-    const token = localStorage.getItem("token");
-    try {
-      await axios.patch(
-        `http://localhost:5555/api/update-task/${id}`,
-        { content: editText },
-        { headers: { Authorization: `Bearer ${token}` } },
-      );
+  // --- FRONTEND VALIDATION ---
+  const trimmedEdit = editText.trim();
 
-      // Map through tasks and update the specific one
-      setTasks(
-        tasks.map((t) => (t.id === id ? { ...t, content: editText } : t)),
-      );
-      setEditingId(null); // Exit edit mode
-      toast.success('Task updated')
-    } catch (err) {
-      const msg = err.response?.data?.errors?.[0]?.msg || "Update failed";
-      toast.error(msg);
-    }
-  };
+  if (trimmedEdit.length < 5) {
+    return toast.error("Task must be at least 5 characters long");
+  }
+
+  if (trimmedEdit.length > 200) {
+    return toast.error("Task is too long (max 200 characters)");
+  }
+
+  // --- IF OK, SEND TO BACKEND ---
+  const token = localStorage.getItem('token');
+  try {
+    await axios.patch(`http://localhost:5555/api/update-task/${id}`, 
+      { content: trimmedEdit },
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+
+    setEditingId(null);
+    setEditText("");
+    refreshTasks();
+    toast.success("Task updated!");
+  } catch (err) {
+    const msg = err.response?.data?.error || "Could not update task";
+    toast.error(msg);
+  }
+};
 
   const logout = () => {
     localStorage.removeItem("token");

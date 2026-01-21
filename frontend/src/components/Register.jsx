@@ -12,6 +12,16 @@ const Register = () => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
+    
+    if (password.length < 8) {
+        return toast.error("Password must be at least 8 characters long");
+    }
+
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/;
+    if (!passwordRegex.test(password)) {
+        return toast.error("Password must contain at least one uppercase letter, one lowercase letter, and one number");
+    }
+
     setLoading(true);
 
     try {
