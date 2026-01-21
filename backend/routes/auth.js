@@ -10,7 +10,11 @@ router.post(
   "/register",
   [
     body("email").isEmail().withMessage("Invalid email address"),
-    body("password").isLength({ min: 8 }).withMessage("Password must be at least 8 characters")
+    body("password")
+    .isLength({ min: 8 }).withMessage("Password must be at least 8 characters")
+    .matches(/[a-z]/).withMessage("Must contain a lowercase letter")
+    .matches(/[A-Z]/).withMessage("Must contain an uppercase letter")
+    .matches(/[0-9]/).withMessage("Must contain a number")
   ],
   async (req, res) => {
     const errors = validationResult(req);

@@ -74,7 +74,7 @@ router.delete('/delete-task/:id', auth, (req, res) => {
 });
 
 // PUT /api/update-task/:id
-router.put('/update-task/:id', auth, [
+router.patch('/update-task/:id', auth, [
     body('content').isLength({ min: 5 }).withMessage('The task must be at least 5 characters')
 ], (req, res) => {
     const taskId = req.params.id;

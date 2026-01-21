@@ -70,7 +70,7 @@ const Dashboard = () => {
   const saveUpdate = async (id) => {
     const token = localStorage.getItem("token");
     try {
-      await axios.put(
+      await axios.patch(
         `http://localhost:5555/api/update-task/${id}`,
         { content: editText },
         { headers: { Authorization: `Bearer ${token}` } },
