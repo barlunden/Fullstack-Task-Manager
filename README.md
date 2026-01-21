@@ -62,6 +62,7 @@ npm run dev
 
 ## 📁 Project Structure
 
+```
 ├── backend/
 │   ├── middleware/    # JWT Auth middleware
 │   ├── routes/        # Auth & Task API endpoints
@@ -72,6 +73,8 @@ npm run dev
     │   ├── components/ # Login, Register, Dashboard
     │   └── App.jsx     # Routing logic
     └── tailwind.config.js
+```
+
 
 ## 🔒 Security Measures
 
